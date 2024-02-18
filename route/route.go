@@ -31,6 +31,9 @@ func SetupRoutes(db *gorm.DB) {
 
 	{
 		apiRoutes.POST("/add", categoryController.AddCategory)
+		apiRoutes.GET("/list", categoryController.ListCategory)
+		apiRoutes.GET("/detail", categoryController.DetailCategory)
+		apiRoutes.POST("/update", categoryController.UpdateCategory)
 	}
 
 	//httpRouter.Run(fmt.Sprintf(":%s", os.Getenv("SERVER_PORT")))

@@ -11,10 +11,30 @@ import (
 type CategoryRepo interface {
 	Migrate() error
 	AddCategory(request.RequestAdd) (model.Category, error)
+	ListCategory() (model.Category, error)
+	DetailCategory(int) (model.Category, error)
+	UpdateCategory(request.RequestUpdateCategory) (model.Category, error)
 }
 
 type categoryRepo struct {
 	DB *gorm.DB
+}
+
+// UpdateCategory implements CategoryRepo.
+func (c categoryRepo) UpdateCategory(req request.RequestUpdateCategory) (data model.Category, err error) {
+	return data, c.DB.Model(&data).Where("id = ? ", req.Id).Updates(model.Category{
+		Category: req.Category,
+	}).Error
+}
+
+// DetailCategory implements CategoryRepo.
+func (c categoryRepo) DetailCategory(req int) (data model.Category, err error) {
+	return data, c.DB.First(&data, "id = ?", req).Error
+}
+
+// ListCategory implements CategoryRepo.
+func (c categoryRepo) ListCategory() (data model.Category, err error) {
+	return data, c.DB.Find(&data).Error
 }
 
 // AddCategory implements CategoryRepo.
