@@ -39,6 +39,7 @@ func (c categoryController) DetailCategory(ctx *gin.Context) {
 	}
 
 	res := response.ResponseCategory{
+		Id:       data.ID,
 		Category: data.Category,
 	}
 
@@ -47,17 +48,23 @@ func (c categoryController) DetailCategory(ctx *gin.Context) {
 
 // ListCategory implements CategoryController.
 func (c categoryController) ListCategory(ctx *gin.Context) {
+	var result []response.ResponseCategory
 	data, err := c.custRepo.ListCategory()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
-	res := response.ResponseCategory{
-		Category: data.Category,
+	for _, list := range data {
+		list_data := response.ResponseCategory{
+			Id:       list.ID,
+			Category: list.Category,
+		}
+
+		result = append(result, list_data)
 	}
 
-	ctx.JSON(http.StatusOK, res)
+	ctx.JSON(http.StatusOK, result)
 }
 
 // UpdateCategory implements CategoryController.

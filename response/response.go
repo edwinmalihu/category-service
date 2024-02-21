@@ -6,5 +6,6 @@ type ResponseSuccess struct {
 }
 
 type ResponseCategory struct {
+	Id       uint   `json:"category_id"`
 	Category string `json:"category"`
 }

@@ -11,7 +11,7 @@ import (
 type CategoryRepo interface {
 	Migrate() error
 	AddCategory(request.RequestAdd) (model.Category, error)
-	ListCategory() (model.Category, error)
+	ListCategory() ([]model.Category, error)
 	DetailCategory(int) (model.Category, error)
 	UpdateCategory(request.RequestUpdateCategory) (model.Category, error)
 }
@@ -33,7 +33,7 @@ func (c categoryRepo) DetailCategory(req int) (data model.Category, err error) {
 }
 
 // ListCategory implements CategoryRepo.
-func (c categoryRepo) ListCategory() (data model.Category, err error) {
+func (c categoryRepo) ListCategory() (data []model.Category, err error) {
 	return data, c.DB.Find(&data).Error
 }
 
