@@ -4,7 +4,9 @@ import (
 	"category-service/controller"
 	"category-service/middleware"
 	"category-service/repository"
+	"fmt"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -36,6 +38,6 @@ func SetupRoutes(db *gorm.DB) {
 		apiRoutes.POST("/update", categoryController.UpdateCategory)
 	}
 
-	//httpRouter.Run(fmt.Sprintf(":%s", os.Getenv("SERVER_PORT")))
-	httpRouter.Run(":8085")
+	httpRouter.Run(fmt.Sprintf(":%s", os.Getenv("SERVER_PORT")))
+	// httpRouter.Run(":8085")
 }
